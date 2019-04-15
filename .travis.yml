@@ -11,7 +11,7 @@ env:
   global:
     - GH_REPO_NAME: ONDA
     - DOXYFILE: $TRAVIS_BUILD_DIR/ONDA/.travis.yml
-- GH_REPO_REF: github.com/Dan-escu/ONDA.git
+    - GH_REPO_REF: github.com/Dan-escu/ONDA.git
 
 # Install dependencies
 addons:
