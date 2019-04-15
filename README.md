@@ -1,8 +1,14 @@
 # Hardware Documentation
 
-## Summary
+# ONDA         [![Build Status](https://travis-ci.org/Dan-escu/ONDA.svg?branch=master)](https://travis-ci.org/Dan-escu/ONDA)
+Project ONDA aims to develop a real-time, handheld musical instrument tuner, using a Raspberry Pi 3.
 
-A custom audio card has been designed for the Raspberry Pi 3, based on the Cirrus Logic WM8731 audio codec. The audio card features a built in microphone, an analogue line in and an analogue line out. It also features built in memory, in order to load the correct drivers once attached to a Raspberry Pi. The design of the audio card has been inspired by an open source project featuring a Raspberry Pi Zero form factor audio card, featured [here](https://github.com/skiselev/i2s_audio_phat).
-	
-## How to build
-The schematic for the audio card is provided in this branch, along with clear outlines of both sides of the PCB. The schematic and PCB were designed in OrCAD and the raw files are available on request. A bill of components is available [here](https://www.mouser.co.uk/ProjectManager/ProjectDetail.aspx?AccessID=6262cdf84a). ![HAT](https://github.com/Dan-escu/ONDA/blob/Hardware-Documentation/ONDA_HAT.jpg).
+## Overview 
+This project uses a Raspberry Pi 3 in conjunction with custom made hardware and software, to process audio data and output frequency information to the user. A Raspberry Pi HAT audio card based on the Cirrus Logic WM8731 codec has been designed, capable of sampling audio data at rates of up to 96KHz. An LCD to display the frequency data is also featured. Software has been developed which is capable of both sampling PCM audio data, and calculating the FFT of this data. The frequency information gained from the FFT analysis is used to send appropriate tuning messages to the LCD.
+
+## Contributing
+We welcome pull requests. For major changes, please open an issue first to discuss what you would like to change.
+
+## Social Media
+[Instagram](https://www.instagram.com/ondasounds/ "Instagram") -------> Follow us on Instagram for the most frequent updates from project ONDA
+[Facebook](https://www.facebook.com/ondatune/) -------> Like us on Facebook
