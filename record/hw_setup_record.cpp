@@ -18,40 +18,42 @@ using namespace std;
 
 /** @brief Maximum number of frames to store in buffer (for mono audio, 1 frame = 1 sample, for stereo, 1 frame = 2 samples */
 constexpr int max_num_of_frames = 8192; 
-/** @brief Number of audio channels */
+/*! @brief Number of audio channels */
 uint16_t waveRecorder::number_of_channels = 1;	
-/** @brief Sampling rate */
+/*! @brief Sampling rate */
 uint32_t waveRecorder::sample_rate = 44100; 	
-/** @brief Data size of samples */
+/*! @brief Data size of samples */
 uint16_t waveRecorder::bits_per_sample = 16;
-/** @brief Bytes per second */
+/*! @brief Bytes per second */
 uint32_t waveRecorder::bytes_per_second = sample_rate * number_of_channels * bits_per_sample / 8;	
-/** @brief Bytes per frame */
+/*! @brief Bytes per frame */
 uint16_t waveRecorder::bytes_per_frame = number_of_channels * bits_per_sample / 8; 
-/** @brief Multiplier for buffer */
+/*! @brief Multiplier for buffer */
 auto multiplier =  waveRecorder::bits_per_sample / 8 * waveRecorder::number_of_channels; 
     
-/**
+/*!
 * @brief samplePCM is called from the class PCMinitialiser writes hardware parameters to the declared PCM device, using ALSA library functions, then the PCM device is read and the data stored in a buffer
 * Each ALSA function will be described briefly, further information can be found here: https://www.alsa-project.org/alsa-doc/alsa-lib/grouppcmhwparams.html */
+
 char * waveRecorder::recordWAV(){
-/** @brief Error code for ALSA functions */
+
+/*! @brief Error code for ALSA functions */
     int err; 
 
-/** @brief Defines PCM hande */
+/*! @brief Defines PCM hande */
     snd_pcm_t *handle;
-/** @brief PCM hardware configuration space container */
+/*! @brief PCM hardware configuration space container */
     snd_pcm_hw_params_t *params;
-/** @brief Setting sample rate from header equal to local sample rate */
+/*! @brief Setting sample rate from header equal to local sample rate */
     unsigned int sampleRate = sample_rate;	
-/** @brief Sub unit direction */
+/*! @brief Sub unit direction */
     int dir;
-/** @brief number of frames to fill buffer (used in read function below) */
+/*! @brief number of frames to fill buffer (used in read function below) */
     snd_pcm_uframes_t frames = 1;	
-/** @brief Name of PCM device, can be found by typing aplay -l into command line, (1st digit is 'card number', 2nd digit is 'device number) */
+/*! @brief Name of PCM device, can be found by typing aplay -l into command line, (1st digit is 'card number', 2nd digit is 'device number) */
     char *device = (char*) "plughw:0,0";	
 
-/** @brief Open PCM device for audio capture, check error codes and throw exception if cannot open */
+/*! @brief Open PCM device for audio capture, check error codes and throw exception if cannot open */
     err = snd_pcm_open(&handle, device, SND_PCM_STREAM_CAPTURE, 0);
     
 if (err)
@@ -60,13 +62,13 @@ if (err)
         throw std::exception();
     }
 
-/** @brief Allocate a hardware parameters object */
+/*! @brief Allocate a hardware parameters object */
     snd_pcm_hw_params_alloca(&params);
 
-/** @brief Fill it in with default values */
+/*! @brief Fill it in with default values */
     snd_pcm_hw_params_any(handle, params);
 
-    /** Interleaved mode (irrelevant for mono audio sampling), check error codes and throw exception if cannot set */
+    /*! Interleaved mode (irrelevant for mono audio sampling), check error codes and throw exception if cannot set */
     err = snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
     
 if (err)
@@ -75,7 +77,7 @@ if (err)
         snd_pcm_close(handle);
         throw std::exception();
     }
-    /** @brief Signed 16-bit little-endian format, check error codes and throw exception if cannot set */
+    /*! @brief Signed 16-bit little-endian format, check error codes and throw exception if cannot set */
     if (bits_per_sample == 16) err = snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
     else err = snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_U8);
     if (err)
@@ -84,7 +86,7 @@ if (err)
         snd_pcm_close(handle);
         throw std::exception();
     }
-    /** @brief One or two channels (mono or stereo), defined in static members, check error codes and throw exception if cannot set */
+    /*! @brief One or two channels (mono or stereo), defined in static members, check error codes and throw exception if cannot set */
     err = snd_pcm_hw_params_set_channels(handle, params, number_of_channels);
     
 	if (err)
@@ -93,7 +95,7 @@ if (err)
         snd_pcm_close(handle);
         throw std::exception();
     }
-    /** @brief Set sampling rate, defined above, check error codes and throw exception if cannot set */
+    /*! @brief Set sampling rate, defined above, check error codes and throw exception if cannot set */
     sampleRate = sample_rate;
 
     err = snd_pcm_hw_params_set_rate_near(handle, params, &sampleRate, &dir);
@@ -104,7 +106,7 @@ if (err)
         throw std::exception();
     }
     sample_rate = sampleRate;
-    /** @brief Set period size, check error codes and throw exception if cannot set */
+    /*! @brief Set period size, check error codes and throw exception if cannot set */
 err = snd_pcm_hw_params_set_period_size_near(handle, params, &frames, &dir);
     
 if (err)
@@ -113,7 +115,7 @@ if (err)
         snd_pcm_close(handle);
         throw std::exception();
     }
-    /** @brief Write the parameters to the driver, check error codes and throw exception if cannot set */
+    /*! @brief Write the parameters to the driver, check error codes and throw exception if cannot set */
     err = snd_pcm_hw_params(handle, params);
     
 if (err < 0)
@@ -123,7 +125,7 @@ if (err < 0)
         throw  std::exception();
     }
 
-    /** @brief Use a buffer large enough to hold one period, check error codes and throw exception if cannot find */
+    /*! @brief Use a buffer large enough to hold one period, check error codes and throw exception if cannot find */
     err = snd_pcm_hw_params_get_period_size(params, &frames, &dir);
     if (err)
     {
@@ -132,7 +134,7 @@ if (err < 0)
         throw  std::exception();
     }
 
-    /** @brief Get period time, check error codes and throw exception if cannot get */
+    /*! @brief Get period time, check error codes and throw exception if cannot get */
 
     err = snd_pcm_hw_params_get_period_time(params, &sampleRate, &dir);
     if (err)
@@ -143,11 +145,11 @@ if (err < 0)
     }
 
 
-/** @brief Number of frames read from PCM device */
+/*! @brief Number of frames read from PCM device */
     long num_read_frames = 0; 
     
 
-/** @brief snd_pcm_readi reads PCM data into buffer, until number of read frames reaches the maximum number of read frames, check error codes and throw exception if cannot record to full length */
+/*! @brief snd_pcm_readi reads PCM data into buffer, until number of read frames reaches the maximum number of read frames, check error codes and throw exception if cannot record to full length */
            
 	 while (num_read_frames < max_num_of_frames) {
                 err = snd_pcm_readi(handle, buffer + num_read_frames * multiplier, frames);
@@ -170,12 +172,13 @@ if (err < 0)
     snd_pcm_drain(handle);
     snd_pcm_close(handle);
   
-/** @brief Return buffer */
+/*! @brief Return buffer */
       return buffer;
 }
 
+/*! @brief WaveRecorder initialising buffer */
 waveRecorder::waveRecorder(){
-/** @brief Calculate size of buffer for memory allocation */
+/*! @brief Calculate size of buffer for memory allocation */
   auto size = max_num_of_frames * multiplier;
       buffer = new char[size * 2];
 }
