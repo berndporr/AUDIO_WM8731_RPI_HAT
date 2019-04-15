@@ -8,8 +8,7 @@ include_directories(.)
 add_subdirectory(record)
 
 add_executable(ONDA
-        fftw_test4.cpp
-        pcmread.h
+        main.cpp
         pitchassignclass.h
         pitchdetectclass.h
         displayclass.h
