@@ -1,4 +1,4 @@
-# ONDA
+# ONDA                     [![Build Status](https://travis-ci.org/Dan-escu/ONDA.svg?branch=master)](https://travis-ci.org/Dan-escu/ONDA)
 
 Project ONDA aims to develop a real-time, handheld musical instrument tuner, using a Raspberry Pi 3.
 
