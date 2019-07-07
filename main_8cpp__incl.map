@@ -1,0 +1,7 @@
+<map id="main.cpp" name="main.cpp">
+<area shape="rect" id="node8" href="$hwparam_8h.html" title="defines hardware parameters " alt="" coords="311,80,437,107"/>
+<area shape="rect" id="node16" href="$fftw3_8h.html" title="fftw3.h" alt="" coords="483,80,545,107"/>
+<area shape="rect" id="node18" href="$pitchdetectclass_8h.html" title="Header file containing the class for detects the fundamental frequency of the sound being recorded..." alt="" coords="877,80,1005,107"/>
+<area shape="rect" id="node19" href="$pitchassignclass_8h.html" title="Header file containing the class for comparing fundamental frequency to its relative pitch as a music..." alt="" coords="722,80,853,107"/>
+<area shape="rect" id="node20" href="$displayclass_8h.html" title="Header file containing the class for initialising the LCD display, comparing the fundamental frequenc..." alt="" coords="1080,80,1185,107"/>
+</map>

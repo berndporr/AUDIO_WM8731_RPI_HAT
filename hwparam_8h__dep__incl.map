@@ -1,0 +1,4 @@
+<map id="record/hwparam.h" name="record/hwparam.h">
+<area shape="rect" id="node2" href="$main_8cpp.html" title="Main code which fills input array with values from the recorded sound buffer, applies an fft to this ..." alt="" coords="5,80,80,107"/>
+<area shape="rect" id="node3" href="$hw__setup__record_8cpp.html" title="defines hardware parameters and writes them to PCM device, samples PCM audio into buffer..." alt="" coords="104,80,291,107"/>
+</map>
